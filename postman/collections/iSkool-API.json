@@ -1,0 +1,157 @@
+{
+	"info": {
+		"_postman_id": "61857c82-7343-498c-bc70-c865d8b49930",
+		"name": "iSkool-API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "15349488-61857c82-7343-498c-bc70-c865d8b49930"
+	},
+	"item": [
+		{
+			"name": "Common",
+			"item": [
+				{
+					"name": "Menu List",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "24fd5b91-ff38-477a-ab9a-acf9793223ad",
+								"exec": [
+									"const responseJson = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"//console.log(\"Test:\" + responseJson.data.length);\r",
+									"\r",
+									"pm.test(\"Menu List to have 30 entries\", function () {\r",
+									"    pm.expect(responseJson.data.length).to.eql(30);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"First menu item checks\", function () {\r",
+									"    const menuItem = responseJson.data.find(m => m.menuId === 1);\r",
+									"\r",
+									"    pm.expect(menuItem.menuHeading).to.eql(\"Non-Teaching Staff Dashboard\");\r",
+									"    pm.expect(menuItem.menuType).to.eql(\"module\");\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "ced455cc-1b9e-4d2d-9a08-b049f8dff727",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Application_Base_URL}}/menuDetails/list",
+							"host": [
+								"{{Application_Base_URL}}"
+							],
+							"path": [
+								"menuDetails",
+								"list"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "1bdd0cb9-d66d-4de6-946e-96179d419290"
+		},
+		{
+			"name": "School Info",
+			"item": [
+				{
+					"name": "School Information",
+					"item": [],
+					"id": "f58d0c64-f373-40ad-bdb8-34250473b41c"
+				},
+				{
+					"name": "Management Details",
+					"item": [],
+					"id": "ead78a67-4ca6-4af0-ac3f-3ecf002bc66c"
+				}
+			],
+			"id": "a82ec064-87a4-493b-9686-de8b33a4ff71"
+		},
+		{
+			"name": "Curriculum",
+			"item": [],
+			"id": "dd1c0374-13f3-4e00-9df0-47d7d36df0fa"
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6f9bc264-1488-40fc-b32b-6cac02adf1ea",
+						"exec": [
+							"let responseData=pm.response.json();\r",
+							"pm.environment.set(\"token\", responseData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "c01da183-c99d-436b-8ba5-45aafc668cd9",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userName\":\"root\",\r\n    \"password\":\"welcome\",\r\n    \"schoolId\":1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Application_Base_URL}}/login",
+					"host": [
+						"{{Application_Base_URL}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
